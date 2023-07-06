@@ -13,12 +13,19 @@ class Api extends RestController  {
         // Construct the parent class
         parent::__construct();
     }
-    
+
     public function siswa_get(){
         $this->db->select('*');        
         $data = array ('data'=>$this->db->get('siswa')->result());        
         $this->response($data, 200 );
     }
+
+    public function siswaGetByNis_get(){          
+        $nis = $this->uri->segment('3');
+        $data = array ('data'=>$this->db->get_where('siswa', array("nis" => $nis))->result());        
+        $this->response($data, 200 );
+    }
+
     public function siswa_post(){
         $isidata = array('nis'=>$this->input->post('nis'), 'namasiswa'=>$this->input->post('nama'));
         $this->db->insert('siswa', $isidata);
